@@ -5,10 +5,13 @@ import axios from "axios";
 import Charts from "./components/Charts";
 import Navbar from "./components/Navbar";
 
+import { useLocalStorage } from './hooks/useLocalStorage';
+
 import "./styles.scss";
 
 const App = () => {
   const [coinData, setCoinData] = useState([]);
+  const [darkMode, setDarkMode, toggleDarkMode] = useLocalStorage("isDarkModeOn", false);
 
   useEffect(() => {
     axios
@@ -19,8 +22,10 @@ const App = () => {
       .catch(err => console.log(err));
   }, []);
   return (
-    <div className="App">
-      <Navbar />
+    <div className={`App`}>
+      <Navbar 
+        darkMode={darkMode}
+        setDarkMode={setDarkMode} />
       <Charts coinData={coinData} />
     </div>
   );
